@@ -5,6 +5,7 @@ import { AddRoomModal } from './features/rooms/components/AddRoomModal';
 import { createRoom } from './features/rooms/roomService';
 import { ALL_PARTICIPANTS } from './data/participants';
 import type { Room } from './features/rooms/types';
+import "./App.css"; // Assuming you have some global styles
 
 const App: React.FC = () => {
   const [rooms, setRooms] = useState<Room[]>([]);
@@ -24,17 +25,21 @@ const App: React.FC = () => {
   const handleFinish = () => { /* finish logic */ };
 
   return (
-    <div>
-      <button onClick={() => setModalOpen(true)}>Add Room</button>
-      <AddRoomModal
-        isOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
-        onSubmit={handleSubmit}
-      />
-      <DojoTimer onRotate={handleRotate} onFinish={handleFinish} />
-      <RoomList rooms={rooms} />
-      <p>{ALL_PARTICIPANTS.length} participants balanced across {rooms.length} rooms.</p>
-    </div>
+    <>
+      <aside>
+        <button onClick={() => setModalOpen(true)}>Add Room</button>
+        <AddRoomModal
+          isOpen={modalOpen}
+          onClose={() => setModalOpen(false)}
+          onSubmit={handleSubmit}
+        />
+        <DojoTimer onRotate={handleRotate} onFinish={handleFinish} />
+      </aside>
+      <main>
+        <RoomList rooms={rooms} />
+        <p>{ALL_PARTICIPANTS.length} participants balanced across {rooms.length} rooms.</p>
+      </main>
+    </>
   );
 };
 
