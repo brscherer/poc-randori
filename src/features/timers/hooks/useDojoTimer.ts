@@ -1,5 +1,5 @@
-import { useState, useCallback } from 'react';
-import { useInterval } from '../../../common/hooks/useInterval';
+import { useState } from "react";
+import { useInterval } from "../../../common/hooks/useInterval";
 
 export interface DojoTimerOptions {
   planningDuration?: number;
@@ -9,12 +9,14 @@ export interface DojoTimerOptions {
 }
 
 export function useDojoTimer({
-  planningDuration = 15 * 60,
-  rotationDuration = 2 * 60,
+  // planningDuration = 15 * 60,
+  // rotationDuration = 2 * 60,
+  planningDuration = 5,
+  rotationDuration = 2,
   onRotate,
   onFinish,
 }: DojoTimerOptions) {
-  const [phase, setPhase] = useState<'planning' | 'rotating'>('planning');
+  const [phase, setPhase] = useState<"planning" | "rotating">("planning");
   const [timeLeft, setTimeLeft] = useState(planningDuration);
   const [running, setRunning] = useState(false);
 
@@ -22,8 +24,8 @@ export function useDojoTimer({
     () => {
       setTimeLeft((t) => {
         if (t <= 1) {
-          if (phase === 'planning') {
-            setPhase('rotating');
+          if (phase === "planning") {
+            setPhase("rotating");
             return rotationDuration;
           } else {
             onRotate();

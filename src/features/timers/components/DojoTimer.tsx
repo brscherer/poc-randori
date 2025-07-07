@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDojoTimer } from '../hooks/useDojoTimer';
 import styles from './DojoTimer.module.scss';
+import { useSignals } from '@preact/signals-react/runtime';
 
 function formatTime(seconds: number) {
   const m = Math.floor(seconds / 60).toString().padStart(2, '0');
@@ -9,6 +10,7 @@ function formatTime(seconds: number) {
 }
 
 export const DojoTimer: React.FC<{ onRotate: () => void; onFinish: () => void }> = ({ onRotate, onFinish }) => {
+  useSignals(); // Initialize signals system
   const { phase, timeLeft, running, start, stop } = useDojoTimer({ onRotate, onFinish });
 
   return (

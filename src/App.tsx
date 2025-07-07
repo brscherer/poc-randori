@@ -2,12 +2,16 @@ import React, { useState, useCallback } from 'react';
 import { DojoTimer } from './features/timers/components/DojoTimer';
 import { RoomList } from './features/rooms/components/RoomList';
 import { AddRoomModal } from './features/rooms/components/AddRoomModal';
-import { ALL_PARTICIPANTS } from './data/participants';
 import { balancedRooms } from './state/store';
-import { addRoom } from './state/actions';
+import { addRoom, rotateAllRooms } from './state/actions';
 import "./App.css";
+import { useSignal } from '@preact/signals-react';
+import { useSignals } from '@preact/signals-react/runtime';
 
 const App: React.FC = () => {
+  useSignals(); // Initialize signals system
+  const roomsSignal = useSignal(balancedRooms);
+  const rooms = roomsSignal.value;
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleSubmit = (leader: string, language: string) => {
@@ -16,7 +20,8 @@ const App: React.FC = () => {
   };
 
   const handleRotate = useCallback(() => {
-    // setRooms(prev => prev.map(/* rotation logic */));
+    rotateAllRooms();
+    console.log("Rotated rooms:", rooms.value);
   }, []);
 
   const handleFinish = () => { /* finish logic */ };
@@ -33,8 +38,9 @@ const App: React.FC = () => {
         <DojoTimer onRotate={handleRotate} onFinish={handleFinish} />
       </aside>
       <main>
-        <RoomList rooms={balancedRooms.value} />
-        <p>{ALL_PARTICIPANTS.length} participants balanced across {balancedRooms.value.length} rooms.</p>
+        {rooms.value.length === 0 ? (
+          <p>No rooms available. Please add a room to start.</p>
+        ) : <RoomList rooms={rooms.value} />}
       </main>
     </>
   );
