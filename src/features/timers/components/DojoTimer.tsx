@@ -9,9 +9,13 @@ function formatTime(seconds: number) {
   return `${m}:${s}`;
 }
 
-export const DojoTimer: React.FC<{ onRotate: () => void; onFinish: () => void }> = ({ onRotate, onFinish }) => {
+interface DojoTimerProps {
+  onRotate: () => void;
+}
+
+export const DojoTimer: React.FC<DojoTimerProps> = ({ onRotate }) => {
   useSignals(); // Initialize signals system
-  const { phase, timeLeft, running, start, stop } = useDojoTimer({ onRotate, onFinish });
+  const { phase, timeLeft, running, start, stop } = useDojoTimer({ onRotate });
 
   return (
     <div className={styles.timer}>

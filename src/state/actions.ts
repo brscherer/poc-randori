@@ -16,8 +16,9 @@ export function removeRoom(roomId: string) {
 }
 
 export function rotateAllRooms() {
-  const rotated = rotateParticipantsAcrossRooms(balancedRooms.value);
-  rooms.value = rotated;
+  const current = balancedRooms.value;
+  const rotated = rotateParticipantsAcrossRooms(current);
+  rooms.value = rotated; // Preserve full participant arrays
 }
 
 function rotateParticipantsAcrossRooms(roomsArr: Room[]): Room[] {

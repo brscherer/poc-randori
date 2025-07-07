@@ -21,10 +21,7 @@ const App: React.FC = () => {
 
   const handleRotate = useCallback(() => {
     rotateAllRooms();
-    console.log("Rotated rooms:", rooms.value);
   }, []);
-
-  const handleFinish = () => { /* finish logic */ };
 
   return (
     <>
@@ -35,7 +32,7 @@ const App: React.FC = () => {
           onClose={() => setModalOpen(false)}
           onSubmit={handleSubmit}
         />
-        <DojoTimer onRotate={handleRotate} onFinish={handleFinish} />
+        <DojoTimer onRotate={handleRotate} />
       </aside>
       <main>
         {rooms.value.length === 0 ? (
